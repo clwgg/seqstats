@@ -1,0 +1,33 @@
+* Seqstats
+Seqstats is a small tool written in C on top of the excellent
+[[https://github.com/attractivechaos/klib][klib]] library by Heng Li. It
+provides general summary statistics of both read and assembly files. It can
+read fastq and fasta files, either gzipped or plain.
+
+* Get it!
+
+#+BEGIN_SRC bash
+./git clone --recursive https://github.com/clwgg/seqstats
+
+cd seqstats
+make
+#+END_SRC
+
+* Usage
+
+You can directly supply seqstats with (gzipped) fasta and fastq files.
+If you want to input multiple files, cat-pipe them into seqstats and
+use "-" to symbolize to seqstats to read from STDIN.
+
+#+BEGIN_SRC bash
+seqstats infile.fasta
+seqstats infile.fa.gz
+
+seqstats infile.fastq
+seqstats infile.fq.gz
+
+cat in1.fq.gz in2.fq.gz > seqstats -
+cat chr*.fa > seqstats -
+#+END_SRC
+
+
