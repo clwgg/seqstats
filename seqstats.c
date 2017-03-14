@@ -33,6 +33,13 @@ int main(int argc, char *argv[])
   }
 
   fp = gzopen(argv[1], "r");
+
+  if (!fp) {
+    fprintf(stderr, "Can't open input file.\n\n");
+    fprintf(stderr, "Usage: %s <in.fasta|in.fastq>\n", argv[0]);
+    return 1;
+  }
+
   seq = kseq_init(fp);
 
   int s = 10000;
