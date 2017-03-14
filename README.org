@@ -7,7 +7,7 @@ read fastq and fasta files, either gzipped or plain.
 * Get it!
 
 #+BEGIN_SRC bash
-./git clone --recursive https://github.com/clwgg/seqstats
+git clone --recursive https://github.com/clwgg/seqstats
 
 cd seqstats
 make
