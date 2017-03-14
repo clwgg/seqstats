@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 // Heng Li klib
 #include "klib/kseq.h"
@@ -69,7 +70,7 @@ int main(int argc, char *argv[])
   printf("Total n:\t%i\n", n);
   printf("Total seq:\t%.0f bp\n", full);
   printf("Avg. seq:\t%.2f bp\n", full/n);
-  printf("Median seq:\t%ld bp\n", a[(n-1)/2]);
+  printf("Median seq:\t%.2f bp\n", (a[(int)ceil((n-1)/2.0)]+a[(int)floor((n-1)/2.0)])/2.0);
   printf("N 50:\t\t%ld bp\n", a[j]);
   printf("Min seq:\t%ld bp\n", a[0]);
   printf("Max seq:\t%ld bp\n", a[n-1]);
