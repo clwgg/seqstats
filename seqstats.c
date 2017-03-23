@@ -50,6 +50,8 @@ int main(int argc, char *argv[])
 
   while ((l = kseq_read(seq)) >= 0) {
 
+    if (l == 0) continue;
+
     if (n == s) {
       s = s * 2;
       a = realloc(a, s * sizeof *a);
@@ -61,6 +63,7 @@ int main(int argc, char *argv[])
     full = full + l;
     n++;
   }
+  if (n == 0) goto seqerr;
 
   ks_mergesort(pair, n, a, 0);
 
@@ -89,6 +92,12 @@ int main(int argc, char *argv[])
 
   memerr:
     printf("\n\tCould not allocate sufficient continuous memory.\n\n");
+    kseq_destroy(seq);
+    gzclose(fp);
+    return 1;
+
+  seqerr:
+    printf("\n\tSequence file is empty.\n\n");
     kseq_destroy(seq);
     gzclose(fp);
     return 1;
