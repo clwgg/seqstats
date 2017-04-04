@@ -25,9 +25,15 @@ int main(int argc, char *argv[])
   int n = 0;
   double full = 0;
   if (argc == 1) {
-    fprintf(stderr, "Usage: %s <in.fasta|in.fastq>\n", argv[0]);
+    printf("Usage: %s <in.fasta|in.fastq>\n", argv[0]);
     return 1;
   }
+  else if (argc > 2) {
+    printf("\n\tPlease use\n\n\tcat in1.fa/q[.gz] in2.fa/q[.gz] | %s -", argv[0]);
+    printf("\n\n\t          to specify more than one input.\n\n");
+    return 1;
+  }
+
   if (strcmp( argv[1], "-") == 0) {
     argv[1] = "/dev/stdin";
   }
@@ -35,8 +41,8 @@ int main(int argc, char *argv[])
   fp = gzopen(argv[1], "r");
 
   if (!fp) {
-    fprintf(stderr, "Can't open input file.\n\n");
-    fprintf(stderr, "Usage: %s <in.fasta|in.fastq>\n", argv[0]);
+    printf("Can't open input file.\n\n");
+    printf("Usage: %s <in.fasta|in.fastq>\n", argv[0]);
     return 1;
   }
 
