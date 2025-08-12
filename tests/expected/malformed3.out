@@ -1,0 +1,1 @@
+Incomplete FASTQ quartet detected. Each sequence must have 4 lines: header, sequence, '+', quality.

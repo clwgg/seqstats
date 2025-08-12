@@ -28,9 +28,44 @@ run_case() {
   fi
 }
 
+run_error_case() {
+  local input="$1" expected_error="$2"
+  local out err
+  if out=$("$BIN" "$input" 2>&1); then
+    echo "FAIL $input (expected error but got success)" >&2
+    fail=1
+    return
+  fi
+  if echo "$out" | grep -q "$expected_error"; then
+    echo "PASS $input (error case)"
+  else
+    echo "FAIL $input (unexpected error output)" >&2
+    echo "Expected: $expected_error" >&2
+    echo "Got: $out" >&2
+    fail=1
+  fi
+}
+
+# Basic functionality tests
 run_case "$DATA/test1.fa" "$EXP/test1.out"
 run_case "$DATA/test2.fa" "$EXP/test2.out"
 run_case "$DATA/test3.fq" "$EXP/test3.out"
+
+# Edge case tests
+run_case "$DATA/single.fa" "$EXP/single.out"
+run_case "$DATA/identical.fa" "$EXP/identical.out"
+run_case "$DATA/mixed.fa" "$EXP/mixed.out"
+run_case "$DATA/multiline.fa" "$EXP/multiline.out"
+
+# Error case tests
+run_error_case "$DATA/empty.fa" "Sequence file is empty"
+run_error_case "$DATA/zero_length.fa" "Sequence file is empty"
+
+# Malformed input tests
+run_case "$DATA/malformed2.fa" "$EXP/malformed2.out"
+run_error_case "$DATA/malformed3.fq" "Incomplete FASTQ quartet"
+run_error_case "$DATA/malformed4.fq" "FASTQ quality string length"
+run_case "$DATA/malformed5.fa" "$EXP/malformed5.out"
 
 # gzipped case generated on the fly
 tmp_gz="$DATA/tmp_gz.fa.gz"
